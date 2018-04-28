@@ -44,6 +44,7 @@ class Client extends EventEmitter
 
     login: ->
         @logger.info 'Logging in...'
+        @logger.info 'login', {login_id: @email, password: @password}
         @_apiCall 'POST', usersRoute + '/login', {login_id: @email, password: @password}, @_onLogin
 
     _onLogin: (data, headers) =>
@@ -423,9 +424,12 @@ class Client extends EventEmitter
         options.headers['Authorization'] = 'BEARER ' + @token if @token
         options.proxy = @httpProxy if @httpProxy
         @logger.debug "#{method} #{path}"
+        @logger.debug 'options', options
         @logger.info 'api url:' + options.uri
         request options, (error, res, value) ->
             if error
+                @logger.debug "ERROR: #{method} #{path}"
+                @logger.debug "Error", error
                 if callback? then callback({'id': null, 'error': error.errno}, {}, callback_params)
             else
                 if callback?
