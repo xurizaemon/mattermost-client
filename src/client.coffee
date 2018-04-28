@@ -427,7 +427,7 @@ class Client extends EventEmitter
         options.proxy = @httpProxy if @httpProxy
         @logger.debug "#{method} #{path}"
         @logger.debug 'options', options
-        @logger.info 'api url:' + options.uri
+        @logger.info 'api url: ' + options.uri
         request options, (error, res, value) ->
             if error
                 @logger.debug "ERROR: #{method} #{path}"
@@ -440,6 +440,7 @@ class Client extends EventEmitter
                             value = JSON.parse(value)
                         callback(value, res.headers, callback_params)
                     else
+                        @logger.debug 'HTTP' + res.statusCode + ' on ' + options.uri
                         callback({'id': null, 'error': 'API response: ' + res.statusCode}, res.headers, callback_params)
 
 
