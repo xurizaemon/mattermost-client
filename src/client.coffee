@@ -48,6 +48,7 @@ class Client extends EventEmitter
         @_apiCall 'POST', usersRoute + '/login', {login_id: @email, password: @password}, @_onLogin
 
     _onLogin: (data, headers) =>
+        @logger.debug 'data', data
         if data
             if not data.id
                 @logger.error 'Login call failed'
@@ -187,6 +188,7 @@ class Client extends EventEmitter
         @ws = new WebSocket @socketUrl, options
 
         @ws.on 'error', (error) =>
+            @logger.debug 'error', error
             @_connecting = false
             @emit 'error', error
 
