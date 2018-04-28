@@ -427,7 +427,6 @@ class Client extends EventEmitter
         @logger.debug 'options', options
         @logger.info 'api url:' + options.uri
         request options, (error, res, value) ->
-            @logger.info 'api res url:' + options.uri            
             if error
                 @logger.debug "ERROR: #{method} #{path}"
                 @logger.debug "Error", error
